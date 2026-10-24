@@ -10,13 +10,13 @@ To analyze the models' performance with and without MMSE, and then, for the best
 
 First I built a "dumb" model that always predicts the most common class. It sets the benchmark that every other model has to beat.
 
-| Metric | Baseline (always majority) |
-|---|---|
-| Accuracy | 0.55 |
-| Precision | 0.00 |
-| Recall | 0.00 |
-| F1 | 0.00 |
-| ROC-AUC | 0.50 |
+| Metric    | Baseline (always majority) |
+| --------- | -------------------------- |
+| Accuracy  | 0.55                       |
+| Precision | 0.00                       |
+| Recall    | 0.00                       |
+| F1        | 0.00                       |
+| ROC-AUC   | 0.50                       |
 
 A first run with 5-fold person-level validation (Logistic Regression, Random Forest, XGBoost, with and without MMSE) is saved in `report/results_v1.csv`. It showed the same overall pattern as the repeated validation below: MMSE helps a lot.
 
@@ -24,22 +24,22 @@ A first run with 5-fold person-level validation (Logistic Regression, Random For
 
 I repeated the person-level validation 10 times with different random groupings of people (50 test rounds in total). Values are mean ± standard deviation. The full table is in `report/results_v2_repeated.csv`.
 
-| Experiment | Model | Accuracy | Precision | Recall | F1 | ROC-AUC |
-|---|---|---|---|---|---|---|
-| B (no MMSE) | Baseline | 0.55 ± 0.01 | 0.00 ± 0.00 | 0.00 ± 0.00 | 0.00 ± 0.00 | 0.50 ± 0.00 |
-| B (no MMSE) | Logistic Regression | 0.70 ± 0.07 | 0.69 ± 0.09 | 0.64 ± 0.12 | 0.65 ± 0.09 | 0.76 ± 0.09 |
-| B (no MMSE) | Random Forest | 0.63 ± 0.08 | 0.61 ± 0.11 | 0.56 ± 0.11 | 0.57 ± 0.09 | 0.69 ± 0.09 |
-| B (no MMSE) | XGBoost | 0.64 ± 0.08 | 0.61 ± 0.10 | 0.59 ± 0.13 | 0.59 ± 0.10 | 0.69 ± 0.08 |
-| A (with MMSE) | Baseline | 0.55 ± 0.01 | 0.00 ± 0.00 | 0.00 ± 0.00 | 0.00 ± 0.00 | 0.50 ± 0.00 |
+| Experiment    | Model               | Accuracy    | Precision   | Recall      | F1          | ROC-AUC     |
+| ------------- | ------------------- | ----------- | ----------- | ----------- | ----------- | ----------- |
+| B (no MMSE)   | Baseline            | 0.55 ± 0.01 | 0.00 ± 0.00 | 0.00 ± 0.00 | 0.00 ± 0.00 | 0.50 ± 0.00 |
+| B (no MMSE)   | Logistic Regression | 0.70 ± 0.07 | 0.69 ± 0.09 | 0.64 ± 0.12 | 0.65 ± 0.09 | 0.76 ± 0.09 |
+| B (no MMSE)   | Random Forest       | 0.63 ± 0.08 | 0.61 ± 0.11 | 0.56 ± 0.11 | 0.57 ± 0.09 | 0.69 ± 0.09 |
+| B (no MMSE)   | XGBoost             | 0.64 ± 0.08 | 0.61 ± 0.10 | 0.59 ± 0.13 | 0.59 ± 0.10 | 0.69 ± 0.08 |
+| A (with MMSE) | Baseline            | 0.55 ± 0.01 | 0.00 ± 0.00 | 0.00 ± 0.00 | 0.00 ± 0.00 | 0.50 ± 0.00 |
 | A (with MMSE) | Logistic Regression | 0.81 ± 0.05 | 0.84 ± 0.08 | 0.73 ± 0.09 | 0.77 ± 0.07 | 0.91 ± 0.04 |
-| A (with MMSE) | Random Forest | 0.80 ± 0.05 | 0.85 ± 0.07 | 0.68 ± 0.09 | 0.75 ± 0.06 | 0.87 ± 0.04 |
-| A (with MMSE) | XGBoost | 0.78 ± 0.05 | 0.81 ± 0.08 | 0.69 ± 0.10 | 0.74 ± 0.07 | 0.86 ± 0.04 |
+| A (with MMSE) | Random Forest       | 0.80 ± 0.05 | 0.85 ± 0.07 | 0.68 ± 0.09 | 0.75 ± 0.06 | 0.87 ± 0.04 |
+| A (with MMSE) | XGBoost             | 0.78 ± 0.05 | 0.81 ± 0.08 | 0.69 ± 0.10 | 0.74 ± 0.07 | 0.86 ± 0.04 |
 
 Repeating the validation 10 times (50 test rounds) gave more stable estimates than a single 5-round run. Logistic Regression remained the best or tied-best model in both experiments, but the differences between models were mostly within the spread.
 
 ## Findings
 
-1. **MMSE effect (RQ2):** For Logistic Regression, removing MMSE reduced ROC-AUC from 0.91 to 0.76 and recall from 0.73 to 0.64. Random Forest and XGBoost showed the same pattern. This is a clear sign that MMSE carries a large share of the predictive signal for dementia status. MMSE is a cognitive test that is close to what CDR measures, so Experiment A shows how much the models lean on it, and not that the model is better in a medical sense.
+1. **MMSE effect (RQ2):** For Logistic Regression, removing MMSE reduced ROC-AUC from 0.91 to 0.76 and recall from 0.73 to 0.64. Random Forest and XGBoost showed the same pattern. This is a clear sign that MMSE carries a large share of the predictive signal for dementia status.MMSE measures cognitive impairment directly, so it carries a large share of the signal. It is not part of how the CDR label was assigned (Marcus et al., 2010).
 
 2. **Model comparison (RQ1):** In the repeated validation, the best model was Logistic Regression, with ROC-AUC 0.91 in Experiment A and 0.76 in Experiment B. The baseline got 0.50. The gaps between the three models were smaller than the spread between test rounds, so no model can be called clearly better. A simple, easy-to-interpret model performed at least as well as the more complex ones.
 
@@ -49,7 +49,19 @@ Repeating the validation 10 times (50 test rounds) gave more stable estimates th
 
 5. **Limitations:** The data contain only 150 people (373 visits) from a single study cohort, with no external validation, so the results show associations in this dataset and are not a clinical tool. The label also includes very mild impairment (CDR 0.5), so it is not a confirmed diagnosis.
 
-## Next steps
+## SHAP results (RQ3)
 
-- Run SHAP on Logistic Regression and Random Forest and compare which features they rely on (RQ3).
-- Compare the important features with published medical findings.
+SHAP was computed on held-out people only, for Logistic Regression and Random Forest, and averaged over 5 different random groupings of people. The two models use different units, so I compared the ranks and not the raw values.
+
+6. **Without MMSE (Experiment B):** Both models ranked nWBV, Sex and EDUC as the top three features and SES last (Logistic Regression: 0.84, 0.70, 0.63; Random Forest: 0.097, 0.077, 0.071). Lower brain volume (nWBV) and lower education pushed predictions toward dementia signs.
+
+7. **With MMSE (Experiment A):** MMSE dominated in both models, about three times larger than the next feature (Logistic Regression 2.13 vs 0.75; Random Forest 0.188 vs 0.061). Sex and nWBV were close to each other and swapped ranks between the models, so that difference is small. nWBV importance fell when MMSE was added (Logistic Regression 0.84 to 0.70, Random Forest 0.097 to 0.061), which suggests MMSE carries part of the signal the brain-volume feature had.
+
+8. **Results that need caution:**
+   - Sex: in this dataset 60% of male visits and 33% of female visits have dementia signs, so the models use Sex because of the data. This is probably a feature of how the cohort was built and not a medical finding.
+   - Age: Age alone had almost no association with dementia signs (coefficient -0.04), but became negative (-0.57) once nWBV was included. This suggests Age acts as an adjustment for brain volume, and does not mean that older age protects against dementia.
+   - SES: it pointed in opposite directions in the two models. It is strongly related to education (correlation -0.72), so education and SES should be interpreted together and not separately.
+
+9. **Limits of these explanations:** SHAP shows what the models rely on, not what causes dementia. Both models see the same 150 people, so dataset quirks would appear in both. Plots come from one grouping of people (seed 0).
+
+10. **Still to do:** compare the main findings with published medical sources (evidence table).

@@ -71,7 +71,7 @@ This project builds on my undergraduate final year project, CereBloom (a cogniti
 - **Experiment A:** Age, Sex, EDUC, SES, eTIV, nWBV **plus MMSE**.
 - **Experiment B:** the same features **without MMSE**.
 
-MMSE is a cognitive test that doctors use when judging impairment, so it is very close to the label. Comparing A and B shows how much the models depend on it, and whether the remaining features still carry useful signal (RQ2).
+MMMSE is a direct test of cognition and is closely related to what CDR measures. In OASIS, however, CDR was assigned from clinical interviews without psychometric scores (Marcus et al., 2010), so MMSE is not used to define the label. Comparing A and B shows how much the models rely on MMSE.
 
 ## 7. Methods
 
@@ -158,3 +158,4 @@ All are reported. No single "winner metric" is chosen to make the results look b
 
 - v1.0 (October 2026): first version.
 - v1.1 (October 2026): SHAP will be applied to Logistic Regression as well as Random Forest, because Logistic Regression performed best in the repeated validation.
+- v1.2: corrected the description of MMSE after reading Marcus et al. (2010).
