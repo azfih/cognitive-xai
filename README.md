@@ -139,4 +139,3 @@ AI assistance (Claude, Anthropic) was used as a supplementary tool for code draf
 ## Contact
 
 Hifza Rafiq, hifzarafiq19@gmail.com
-Code licence: MIT Licence
